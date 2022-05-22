@@ -1,0 +1,26 @@
+server:
+  port: 8701
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 7c97fbd8-4c03-4ad0-91dd-badb10956ea6
+  application:
+    name: user-service-invoker
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  config: classpath:logback-springboot.xml
+
+print-server-address:
+  ignore-parent-context: true
+
+info:
+  app: ${spring.application.name}
