@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  sbas:
+    image: nacos/nacos-server:v2.1.0
+    hostname: nacos
+    container_name: nacos
+    ports:
+      - "8848:8848"
+    restart: "always"
+    environment:
+      MODE: standalone
