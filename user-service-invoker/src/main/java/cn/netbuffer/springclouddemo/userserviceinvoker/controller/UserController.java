@@ -1,5 +1,6 @@
 package cn.netbuffer.springclouddemo.userserviceinvoker.controller;
 
+import cn.netbuffer.springclouddemo.userserviceinvoker.client.UserClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Resource
     private RestTemplate restTemplate;
+
+    @Resource
+    private UserClient userClient;
 
     @GetMapping("instances/{serviceId}")
     public List<ServiceInstance> getInstances(@PathVariable("serviceId") String serviceId) {
@@ -88,5 +92,10 @@ public class UserController {
         if (httpServletRequest.getHeader("x-forwarded-prefix") != null) {
             log.debug("from zuul");
         }
+    }
+
+    @GetMapping("/feign/user/{id}")
+    public String fgetUser(@PathVariable("id") Long id, @RequestParam(required = false) Integer s) {
+        return userClient.getUser(id, s);
     }
 }

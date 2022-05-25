@@ -24,3 +24,11 @@ print-server-address:
 
 info:
   app: ${spring.application.name}
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic
+      user-service-provider:
+        loggerLevel: full
