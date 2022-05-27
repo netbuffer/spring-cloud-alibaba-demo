@@ -25,6 +25,7 @@ print-server-address:
 info:
   app: ${spring.application.name}
 
+# https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/#spring-cloud-feign-overriding-defaults
 feign:
   client:
     config:

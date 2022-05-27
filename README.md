@@ -10,4 +10,5 @@
 * curl http://localhost:8701/invoke/user/1?s=1
 
 ## Reference
-* https://github.com/alibaba/spring-cloud-alibaba/wiki 
+* https://github.com/alibaba/spring-cloud-alibaba/wiki
+* https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
