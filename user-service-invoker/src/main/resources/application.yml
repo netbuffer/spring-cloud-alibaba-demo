@@ -33,3 +33,5 @@ feign:
         loggerLevel: basic
       user-service-provider:
         loggerLevel: full
+        connectTimeout: 2000
+        readTimeout: 5000
