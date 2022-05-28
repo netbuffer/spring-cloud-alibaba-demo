@@ -9,6 +9,7 @@
 * docker-compose up -d  (use docker-compose run nacos)
 * curl http://localhost:8701/invoke/user/1?s=1
 * curl http://localhost:8701/invoke/feign/user/1?s=6
+* curl http://localhost:8702/order/detail/1
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
