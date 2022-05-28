@@ -10,6 +10,8 @@
 * curl http://localhost:8701/invoke/user/1?s=1
 * curl http://localhost:8701/invoke/feign/user/1?s=6
 * curl http://localhost:8702/order/detail/1
+* curl -s "http://localhost:8702/order/dictionaries?key=order.sex&className=java.util.List" (not work)
+* curl -s "http://localhost:8702/order/dictionaries?key=a&className=java.lang.String"
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
