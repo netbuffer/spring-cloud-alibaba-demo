@@ -8,7 +8,9 @@
 * docker run --name nacos -e MODE=standalone -p 8848:8848 -d nacos/nacos-server:v2.1.0  (use docker run nacos)
 * docker-compose up -d  (use docker-compose run nacos)
 * curl http://localhost:8701/invoke/user/1?s=1
+* curl http://localhost:8701/invoke/feign/user/1?s=6
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
 * https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
+* https://nacos.io/zh-cn/docs/system-configurations.html

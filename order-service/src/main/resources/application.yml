@@ -1,0 +1,9 @@
+server:
+  port: 8702
+
+spring:
+  application:
+    name: order-service
+
+logging:
+  config: classpath:logback-springboot.xml

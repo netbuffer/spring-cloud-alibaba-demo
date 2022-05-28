@@ -13,3 +13,5 @@ echo start usp
 nohup java ${service_name_prefix}scad-usp $common_param -jar $scad_path/user-service-provider/target/user-service-provider.jar --spring.profiles.active=test >/dev/null 2>&1 &
 echo start usi
 nohup java ${service_name_prefix}scad-usi $common_param -jar $scad_path/user-service-invoker/target/user-service-invoker.jar --spring.profiles.active=test >/dev/null 2>&1 &
+echo start order-service
+nohup java ${service_name_prefix}scad-order-service $common_param -jar $scad_path/order-service/target/order-service.jar >/dev/null 2>&1 &

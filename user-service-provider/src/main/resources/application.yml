@@ -4,7 +4,7 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         # copy from nacos console
-        namespace: 7c97fbd8-4c03-4ad0-91dd-badb10956ea6
+        namespace: 3f21b39c-8476-4520-ac89-3ea4c0e1f47b
   application:
     name: user-service-provider
 

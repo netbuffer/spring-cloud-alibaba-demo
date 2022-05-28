@@ -21,6 +21,7 @@
     <modules>
         <module>user-service-provider</module>
         <module>user-service-invoker</module>
+        <module>order-service</module>
     </modules>
 
     <properties>
