@@ -31,7 +31,9 @@ public class OrderController {
     @GetMapping(value = "dictionaries")
     public Object dictionaries(String key, String className) throws ClassNotFoundException {
         log.debug("get dictionaries key={} className={}", key, className);
-        return environment.getProperty(key, Class.forName(className));
+        Object value = environment.getProperty(key, Class.forName(className));
+        log.debug("get dictionaries key={} value={}", key, value);
+        return value;
     }
 
 }
