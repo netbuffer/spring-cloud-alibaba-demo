@@ -12,6 +12,7 @@
 * curl http://localhost:8702/order/detail/1
 * curl -s "http://localhost:8702/order/dictionaries?key=order.sex&className=java.util.List" (not work)
 * curl -s "http://localhost:8702/order/dictionaries?key=a&className=java.lang.String"
+* curl http://localhost:8701/randomorg/integers
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
