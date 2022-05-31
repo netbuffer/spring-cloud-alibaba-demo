@@ -19,3 +19,12 @@ spring:
       transport:
         port: 8801
         dashboard: 127.0.0.1:8800
+      datasource:
+        nacos-config-dsl:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            namespace: 3f21b39c-8476-4520-ac89-3ea4c0e1f47b
+            group-id: order
+            data-id: order-service-sentinel.json
+            data-type: json
+            rule-type: flow

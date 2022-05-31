@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: order-service
+  cloud:
+    # https://github.com/alibaba/spring-cloud-alibaba/wiki/Sentinel#%E9%85%8D%E7%BD%AE com.alibaba.csp.sentinel.slots.block.RuleConstant
+    sentinel:
+      enabled: true
+      eager: true
+      log:
+        switch-pid: true
 
 logging:
   config: classpath:logback-springboot.xml
