@@ -1,9 +1,14 @@
 server:
   port: 8702
+  shutdown: graceful
 
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
   application:
     name: order-service
+  profiles:
+    active: corp
   cloud:
     # https://github.com/alibaba/spring-cloud-alibaba/wiki/Sentinel#%E9%85%8D%E7%BD%AE com.alibaba.csp.sentinel.slots.block.RuleConstant
     sentinel:
@@ -14,3 +19,7 @@ spring:
 
 logging:
   config: classpath:logback-springboot.xml
+
+info:
+  app:
+    version: v2.0.0

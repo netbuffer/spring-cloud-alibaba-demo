@@ -1,6 +1,8 @@
 # https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-config
 # ${prefix}-${spring.profiles.active}.${file-extension}
 spring:
+  profiles:
+    active: home
   cloud:
     nacos:
       config:
@@ -28,3 +30,7 @@ spring:
             data-id: order-service-sentinel.json
             data-type: json
             rule-type: flow
+
+info:
+  app:
+    version: v1.0.0

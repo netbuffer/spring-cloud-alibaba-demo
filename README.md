@@ -12,9 +12,13 @@
 * curl http://localhost:8702/order/detail/1
 * curl -s "http://localhost:8702/order/dictionaries?key=order.sex&className=java.util.List" (not work)
 * curl -s "http://localhost:8702/order/dictionaries?key=a&className=java.lang.String"
+* curl -s "http://localhost:8702/order/dictionaries?key=corp.name&className=java.lang.String"
+* curl -s "http://localhost:8702/order/dictionaries?key=home.address&className=java.lang.String"
+* curl -s "http://localhost:8702/order/dictionaries?key=info.app.version&className=java.lang.String"
 * curl http://localhost:8701/randomorg/integers
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
 * https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
 * https://nacos.io/zh-cn/docs/system-configurations.html
+* https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/
