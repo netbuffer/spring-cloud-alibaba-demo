@@ -23,6 +23,7 @@ spring:
             - Path=/scadusp/**
           filters:
             - StripPrefix=1
+            - LogRequestTime
         - id: user-service-invoker
           uri: lb://user-service-invoker
           predicates:
