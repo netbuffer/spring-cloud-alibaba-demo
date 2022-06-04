@@ -22,6 +22,7 @@
 * curl http://localhost:8709/actuator/gateway/globalfilters
 * curl http://localhost:8709/actuator/gateway/routefilters
 * curl -H "X-Request-bd-id:1234" -v http://localhost:8709
+* curl -v http://localhost:8709?x-user-type=test
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki

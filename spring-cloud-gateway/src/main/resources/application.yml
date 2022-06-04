@@ -42,6 +42,12 @@ spring:
           filters:
             - RemoveRequestHeader=X-Request-bd-id
             - AddResponseHeader=X-Response-From, bd
+        - id: taobao_route
+          uri: http://www.taobao.com
+          predicates:
+            - Token=x-user-type, \w+
+          filters:
+            - SetStatus=400
 
 management:
   endpoint:
