@@ -19,9 +19,16 @@
 * curl http://localhost:8709/scados/order/detail/1
 * curl http://localhost:8709/scadusi/randomorg/integers
 * curl http://localhost:8709/scadusp/user/1
+* curl http://localhost:8709/actuator/gateway/globalfilters
+* curl http://localhost:8709/actuator/gateway/routefilters
+* curl -H "X-Request-bd-id:1234" -v http://localhost:8709
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
 * https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
 * https://nacos.io/zh-cn/docs/system-configurations.html
 * https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/
+* https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/
+* https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#writing-custom-route-predicate-factories
+* https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#default-filters
+* https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#global-timeouts

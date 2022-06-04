@@ -35,8 +35,18 @@ spring:
             - Path=/scados/**
           filters:
             - StripPrefix=1
+        - id: baidu_route
+          uri: http://www.baidu.com
+          predicates:
+            - Header=X-Request-bd-id, \d+
+          filters:
+            - RemoveRequestHeader=X-Request-bd-id
+            - AddResponseHeader=X-Response-From, bd
 
 management:
+  endpoint:
+    gateway:
+      enabled: true
   endpoints:
     web:
       exposure:
