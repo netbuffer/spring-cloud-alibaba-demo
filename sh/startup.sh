@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# jcmd|awk '{print $1}'|xargs kill -9
 agent_path=your_agent_path
 scad_path=your_project_path
 
@@ -15,3 +16,5 @@ echo start usi
 nohup java ${service_name_prefix}scad-usi $common_param -jar $scad_path/user-service-invoker/target/user-service-invoker.jar --spring.profiles.active=test >/dev/null 2>&1 &
 echo start order-service
 nohup java ${service_name_prefix}scad-order-service $common_param -jar $scad_path/order-service/target/order-service.jar >/dev/null 2>&1 &
+echo start gateway
+nohup java ${service_name_prefix}scad-gateway $common_param -jar $scad_path/spring-cloud-gateway/target/spring-cloud-gateway.jar >/dev/null 2>&1 &

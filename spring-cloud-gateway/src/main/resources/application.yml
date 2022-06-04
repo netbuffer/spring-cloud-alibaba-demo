@@ -1,0 +1,52 @@
+server:
+  port: 8709
+
+spring:
+  main:
+    # https://stackoverflow.com/questions/68587832/spring-cloud-gateway-spring-mvc-found-on-classpath-which-is-incompatible-with
+    web-application-type: reactive
+  application:
+    name: spring-cloud-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 3f21b39c-8476-4520-ac89-3ea4c0e1f47b
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: user-service-provider
+          uri: lb://user-service-provider
+          predicates:
+            - Path=/scadusp/**
+          filters:
+            - StripPrefix=1
+        - id: user-service-invoker
+          uri: lb://user-service-invoker
+          predicates:
+            - Path=/scadusi/**
+          filters:
+            - StripPrefix=1
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/scados/**
+          filters:
+            - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  config: classpath:logback-springboot.xml
+
+print-server-address:
+  ignore-parent-context: true
+
+info:
+  app: ${spring.application.name}

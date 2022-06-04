@@ -22,6 +22,7 @@
         <module>user-service-provider</module>
         <module>user-service-invoker</module>
         <module>order-service</module>
+        <module>spring-cloud-gateway</module>
     </modules>
 
     <properties>

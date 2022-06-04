@@ -16,6 +16,9 @@
 * curl -s "http://localhost:8702/order/dictionaries?key=home.address&className=java.lang.String"
 * curl -s "http://localhost:8702/order/dictionaries?key=info.app.version&className=java.lang.String"
 * curl http://localhost:8701/randomorg/integers
+* curl http://localhost:8709/scados/order/detail/1
+* curl http://localhost:8709/scadusi/randomorg/integers
+* curl http://localhost:8709/scadusp/user/1
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
