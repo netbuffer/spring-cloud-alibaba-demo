@@ -33,3 +33,4 @@
 * https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#writing-custom-route-predicate-factories
 * https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#default-filters
 * https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#global-timeouts
+* https://github.com/alibaba/spring-cloud-alibaba/wiki/Sentinel#spring-cloud-gateway-%E6%94%AF%E6%8C%81

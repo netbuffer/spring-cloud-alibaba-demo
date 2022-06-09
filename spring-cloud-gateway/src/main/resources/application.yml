@@ -8,6 +8,14 @@ spring:
   application:
     name: spring-cloud-gateway
   cloud:
+    sentinel:
+      enabled: true
+      eager: true
+      filter:
+        enabled: false
+      transport:
+        dashboard: 127.0.0.1:8800
+        port: 8802
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
