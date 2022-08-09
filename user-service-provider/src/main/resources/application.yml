@@ -2,9 +2,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: ${SCAD_USP_NACOS_ADDR:127.0.0.1:8848}
         # copy from nacos console
-        namespace: 3f21b39c-8476-4520-ac89-3ea4c0e1f47b
+        namespace: ${SCAD_USP_NACOS_NS:3f21b39c-8476-4520-ac89-3ea4c0e1f47b}
   application:
     name: user-service-provider
 

@@ -8,15 +8,15 @@ spring:
       config:
         prefix: order-service
         file-extension: yaml
-        server-addr: 127.0.0.1:8848
-        namespace: 3f21b39c-8476-4520-ac89-3ea4c0e1f47b
+        server-addr: ${SCAD_OS_NACOS_ADDR:127.0.0.1:8848}
+        namespace: ${SCAD_OS_NACOS_NS:3f21b39c-8476-4520-ac89-3ea4c0e1f47b}
         extension-configs:
           - data-id: dictionaries.yaml
             group: order
             refresh: true
       discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: 3f21b39c-8476-4520-ac89-3ea4c0e1f47b
+        server-addr: ${SCAD_OS_NACOS_ADDR:127.0.0.1:8848}
+        namespace: ${SCAD_OS_NACOS_NS:3f21b39c-8476-4520-ac89-3ea4c0e1f47b}
     sentinel:
       transport:
         port: 8801
@@ -24,8 +24,8 @@ spring:
       datasource:
         nacos-config-dsl:
           nacos:
-            server-addr: 127.0.0.1:8848
-            namespace: 3f21b39c-8476-4520-ac89-3ea4c0e1f47b
+            server-addr: ${SCAD_OS_NACOS_ADDR:127.0.0.1:8848}
+            namespace: ${SCAD_OS_NACOS_NS:3f21b39c-8476-4520-ac89-3ea4c0e1f47b}
             group-id: order
             data-id: order-service-sentinel.json
             data-type: json
