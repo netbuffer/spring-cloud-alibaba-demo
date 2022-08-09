@@ -24,6 +24,11 @@
 * curl -H "X-Request-bd-id:1234" -v http://localhost:8709
 * curl -v http://localhost:8709?x-user-type=test
 
+## Docker Image
+* https://hub.docker.com/r/javawiki/spring-cloud-alibaba-demo
+* docker build -t javawiki/spring-cloud-alibaba-demo:v1.0.0 .
+* docker-compose up
+
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
 * https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/

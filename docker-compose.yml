@@ -1,11 +1,38 @@
 version: "3.9"
 services:
   nacos:
-    image: nacos/nacos-server:v2.1.0
+    image: nacos/nacos-server:v2.1.0-slim
+    pull_policy: "if_not_present"
     hostname: nacos
     container_name: nacos
     ports:
       - "8848:8848"
-    restart: "always"
+    restart: "no"
     environment:
+      TZ: Asia/Shanghai
       MODE: standalone
+  scad:
+    image: javawiki/spring-cloud-alibaba-demo:v1.0.0
+    pull_policy: "if_not_present"
+    hostname: scad
+    container_name: scad
+    ports:
+      - "8702:8702"
+      - "8709:8709"
+      - "8701:8701"
+      - "8700:8700"
+    restart: "no"
+    links:
+      - nacos
+    depends_on:
+      - nacos
+    environment:
+      TZ: Asia/Shanghai
+      SCAD_OS_NACOS_ADDR: nacos:8848
+      SCAD_OS_NACOS_NS: public
+      SCAD_GW_NACOS_ADDR: nacos:8848
+      SCAD_GW_NACOS_NS: public
+      SCAD_USI_NACOS_ADDR: nacos:8848
+      SCAD_USI_NACOS_NS: public
+      SCAD_USP_NACOS_ADDR: nacos:8848
+      SCAD_USP_NACOS_NS: public
