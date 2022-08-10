@@ -18,6 +18,7 @@
 * curl http://localhost:8701/randomorg/integers
 * curl http://localhost:8709/scados/order/detail/1
 * curl http://localhost:8709/scadusi/randomorg/integers
+* curl http://localhost:8709/scadusi/invoke/feign/user/1
 * curl http://localhost:8709/scadusp/user/1
 * curl http://localhost:8709/actuator/gateway/globalfilters
 * curl http://localhost:8709/actuator/gateway/routefilters
