@@ -29,6 +29,11 @@
 * https://hub.docker.com/r/javawiki/spring-cloud-alibaba-demo
 * docker build -t javawiki/spring-cloud-alibaba-demo:v1.0.0 .
 * docker-compose up
+* use docker run
+```shell
+docker run --name nacos -e MODE=standalone -p 8848:8848 -d nacos/nacos-server:v2.1.0
+docker run --rm -it -p 8702:8702 -p 8709:8709 -p 8701:8701 -p 8700:8700 -e TZ=Asia/Shanghai -e SCAD_OS_NACOS_ADDR=nacos:8848 -e SCAD_OS_NACOS_NS=public -e SCAD_GW_NACOS_ADDR=nacos:8848 -e SCAD_GW_NACOS_NS=public -e SCAD_USI_NACOS_ADDR=nacos:8848 -e SCAD_USI_NACOS_NS=public -e SCAD_USP_NACOS_ADDR=nacos:8848 -e SCAD_USP_NACOS_NS=public --link nacos --name scad -h scad javawiki/spring-cloud-alibaba-demo:v1.0.0 bash
+```
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
