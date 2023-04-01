@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  nacos:
+    image: nacos/nacos-server:v2.1.0-slim
+    hostname: nacos
+    container_name: nacos
+    ports:
+      - "8848:8848"
+    restart: "no"
+    environment:
+      TZ: Asia/Shanghai
+      MODE: standalone
+    volumes:
+      - ./nacos-logs/:/home/nacos/logs

@@ -5,7 +5,6 @@
 * https://gitee.com/netbuffer/spring-cloud-demo
 
 ## Help
-* docker run --name nacos -e MODE=standalone -p 8848:8848 -d nacos/nacos-server:v2.1.0  (use docker run nacos)
 * docker-compose up -d  (use docker-compose run nacos)
 * curl http://localhost:8701/invoke/user/1?s=1
 * curl http://localhost:8701/invoke/feign/user/1?s=6
@@ -24,6 +23,11 @@
 * curl http://localhost:8709/actuator/gateway/routefilters
 * curl -H "X-Request-bd-id:1234" -v http://localhost:8709
 * curl -v http://localhost:8709?x-user-type=test
+
+### nacos
+* docker run --name nacos -e MODE=standalone -p 8848:8848 -d nacos/nacos-server:v2.1.0  (use docker run nacos)
+* docker-compose -f nacos-standalone.yml up -d
+* http://localhost:8848/nacos nacos/nacos (create namespace with id 3f21b39c-8476-4520-ac89-3ea4c0e1f47b)
 
 ## Docker Image
 * https://hub.docker.com/r/javawiki/spring-cloud-alibaba-demo

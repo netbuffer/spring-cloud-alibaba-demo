@@ -1,0 +1,5 @@
+### /scadusi/randomorg/integers
+GET http://localhost:8709/scadusi/randomorg/integers
+
+### /scados/order/detail/1
+GET http://localhost:8709/scados/order/detail/1
