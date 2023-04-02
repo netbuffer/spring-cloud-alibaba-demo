@@ -7,6 +7,7 @@ services:
     container_name: nacos
     ports:
       - "8848:8848"
+      - "9848:9848"
     restart: "no"
     environment:
       TZ: Asia/Shanghai

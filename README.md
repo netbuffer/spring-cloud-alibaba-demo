@@ -41,6 +41,7 @@ docker run --rm -it -p 8702:8702 -p 8709:8709 -p 8701:8701 -p 8700:8700 -e TZ=As
 
 ## Reference
 * https://github.com/alibaba/spring-cloud-alibaba/wiki
+* https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
 * https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
 * https://nacos.io/zh-cn/docs/system-configurations.html
 * https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/
