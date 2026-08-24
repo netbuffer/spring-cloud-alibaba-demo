@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 public class UserServiceInvokerApplication {
 
     /**
-     * ribbon客户端负载均衡实例
+     * 基于Spring Cloud LoadBalancer的客户端负载均衡实例
      *
      * @return
      */

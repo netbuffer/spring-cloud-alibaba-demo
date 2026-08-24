@@ -3,6 +3,8 @@
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <springProperty scope="context" name="app" source="spring.application.name"/>
+    <!-- 统一日志目录：默认项目运行目录下的 .logs/<应用名>/，可通过 logging.file.path 覆盖 -->
+    <springProperty scope="context" name="logPath" source="logging.file.path" defaultValue=".logs"/>
     <property name="log_pattern" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} [%X{tid}] %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
@@ -22,9 +24,9 @@
     </appender>
 
     <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${app}.log</file>
+        <file>${logPath}/${app}/${app}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${app}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${logPath}/${app}/${app}.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>3</maxHistory>
         </rollingPolicy>
         <encoder>

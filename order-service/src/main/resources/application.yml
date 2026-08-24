@@ -9,13 +9,38 @@ spring:
     name: order-service
   profiles:
     active: corp
+  config:
+    import:
+      # SCA 2022.0.0+ 移除 bootstrap 配置加载机制，改用 spring.config.import
+      - optional:nacos:order-service.yaml
+      - optional:nacos:order-service-${spring.profiles.active}.yaml
+      - optional:nacos:dictionaries.yaml?group=order&refreshEnabled=true
   cloud:
+    nacos:
+      config:
+        server-addr: ${SCAD_OS_NACOS_ADDR:127.0.0.1:8848}
+        namespace: ${SCAD_OS_NACOS_NS:3f21b39c-8476-4520-ac89-3ea4c0e1f47b}
+      discovery:
+        server-addr: ${SCAD_OS_NACOS_ADDR:127.0.0.1:8848}
+        namespace: ${SCAD_OS_NACOS_NS:3f21b39c-8476-4520-ac89-3ea4c0e1f47b}
     # https://github.com/alibaba/spring-cloud-alibaba/wiki/Sentinel#%E9%85%8D%E7%BD%AE com.alibaba.csp.sentinel.slots.block.RuleConstant
     sentinel:
       enabled: true
       eager: true
       log:
         switch-pid: true
+      transport:
+        port: 8801
+        dashboard: 127.0.0.1:8800
+      datasource:
+        nacos-config-dsl:
+          nacos:
+            server-addr: ${SCAD_OS_NACOS_ADDR:127.0.0.1:8848}
+            namespace: ${SCAD_OS_NACOS_NS:3f21b39c-8476-4520-ac89-3ea4c0e1f47b}
+            group-id: order
+            data-id: order-service-sentinel.json
+            data-type: json
+            rule-type: flow
 
 logging:
   config: classpath:logback-springboot.xml

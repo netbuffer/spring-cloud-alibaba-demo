@@ -6,8 +6,8 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +77,7 @@ public class UserController {
 
     @GetMapping("headers")
     public Map<String, String> headers(HttpServletRequest httpServletRequest) {
-        //经过zuul后会携带x-forwarded-prefix
+        //经过网关转发后会携带x-forwarded-*系列头
         Enumeration<String> names = httpServletRequest.getHeaderNames();
         Map<String, String> headers = new HashMap<>();
         while (names.hasMoreElements()) {
@@ -89,8 +89,9 @@ public class UserController {
 
     @GetMapping("from")
     public void from(HttpServletRequest httpServletRequest) {
-        if (httpServletRequest.getHeader("x-forwarded-prefix") != null) {
-            log.debug("from zuul");
+        // 5.x网关默认剥离x-forwarded-*头，演示改用自定义注入头X-Gateway-Source识别
+        if (httpServletRequest.getHeader("X-Gateway-Source") != null) {
+            log.debug("from gateway");
         }
     }
 

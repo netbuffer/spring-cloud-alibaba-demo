@@ -1,6 +1,5 @@
 package cn.netbuffer.springclouddemo.userserviceinvoker.client;
 
-import com.google.common.collect.ImmutableMap;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,7 @@ import java.util.Map;
 @FeignClient(value = "user-service-provider", fallback = UserClient.UserClientFallback.class)
 public interface UserClient {
 
-    Map nullUser = ImmutableMap.of("id", -1);
+    Map nullUser = Map.of("id", -1);
 
     @GetMapping("/user/{id}")
     String getUser(@PathVariable("id") Long id, @RequestParam Integer s);

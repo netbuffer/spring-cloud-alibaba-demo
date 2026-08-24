@@ -1,5 +1,140 @@
-### /scadusi/randomorg/integers
-GET http://localhost:8709/scadusi/randomorg/integers
+## ============================================================
+## spring-cloud-alibaba-demo 本机调试请求集（IDEA HTTP Client）
+##
+## ⭐ 链路验证原则：所有业务请求一律经过网关 :8709，
+##    验证「网关路由 → 负载均衡 → 目标服务」完整微服务链路；
+##    直连各服务的请求仅放在最后的【附录】，用于单服务排障。
+##
+## 前置条件：
+##   1. Nacos 已启动              -> localhost:8848（控制台 :8080）
+##   2. Sentinel Dashboard 已启动 -> localhost:8800（可选，docker: bladex/sentinel-dashboard）
+##   3. 四个服务已启动            -> provider:8700 / invoker:8701 / order:8702 / gateway:8709
+## ============================================================
 
-### /scados/order/detail/1
-GET http://localhost:8709/scados/order/detail/1
+@gateway = http://localhost:8709
+@provider = http://localhost:8700
+@invoker = http://localhost:8701
+@order = http://localhost:8702
+
+### ==================== 1. 网关 → user-service-provider 链路 (/scadusp/**) ====================
+
+### 查询用户：网关路由(StripPrefix+LogRequestTime过滤器) → LB → provider
+GET {{gateway}}/scadusp/user/1
+
+### 慢调用 5 秒：验证 Sentinel 熔断/超时在全链路上的表现
+GET {{gateway}}/scadusp/user/2?s=5
+
+### 新增用户：POST 经网关转发
+POST {{gateway}}/scadusp/user
+Content-Type: application/json
+
+{
+  "name": "alice",
+  "age": 18
+}
+
+### 重试测试 - 正常 200（状态码经网关透传回调用方）
+GET {{gateway}}/scadusp/user/retry-test?code=200
+
+### 重试测试 - 502 Bad Gateway
+GET {{gateway}}/scadusp/user/retry-test?code=502
+
+### 重试测试 - 503 Service Unavailable
+GET {{gateway}}/scadusp/user/retry-test?code=503
+
+### 重试测试 - 504 Gateway Timeout
+GET {{gateway}}/scadusp/user/retry-test?code=504
+
+### ==================== 2. 网关 → user-service-invoker 链路 (/scadusi/**) ====================
+### 完整链路：网关 → invoker --RestTemplate(LB)/Feign--> provider
+
+### RestTemplate + LoadBalancer 服务名调用（注册中心负载均衡）
+GET {{gateway}}/scadusi/invoke/user/1
+
+### 慢调用 5 秒（sleep 发生在 invoker 侧）
+GET {{gateway}}/scadusi/invoke/user/1?s=5
+
+### Feign 调用 provider
+GET {{gateway}}/scadusi/invoke/feign/user/1
+
+### Feign 慢调用 6 秒：未启用熔断器时表现为长阻塞；如需验证 fallback 降级，
+### 需在 invoker 开启 spring.cloud.openfeign.circuitbreaker.enabled=true 并接入 Sentinel
+GET {{gateway}}/scadusi/invoke/feign/user/1?s=6
+
+### 服务发现 - 查看 provider 实例列表
+GET {{gateway}}/scadusi/invoke/instances/user-service-provider
+
+### 服务发现 - 全部服务列表
+GET {{gateway}}/scadusi/invoke/getServices
+
+### DiscoveryClient 描述信息
+GET {{gateway}}/scadusi/invoke/description
+
+### 打印请求全部 Header：观察网关 AddRequestHeader 注入的 X-Gateway-Source 头
+### （注：5.x 网关默认剥离 x-forwarded-* 头，需配 trusted-proxies 才启用转发头注入）
+GET {{gateway}}/scadusi/invoke/headers
+
+### 网关来源识别（X-Gateway-Source 注入后日志输出 from gateway）
+GET {{gateway}}/scadusi/invoke/from
+
+### Feign 直连外部 URL（random.org 随机数，需外网）
+GET {{gateway}}/scadusi/randomorg/integers
+
+### ==================== 3. 网关 → order-service 链路 (/scados/**) ====================
+### 依赖 Nacos 配置：order-service.yaml / order-service-corp.yaml / dictionaries.yaml(group=order)
+
+### 订单详情（orderType 来自配置中心，支持 @RefreshScope 动态刷新）
+GET {{gateway}}/scados/order/detail/1
+
+### 扩展字典 - Integer 类型
+GET {{gateway}}/scados/order/dictionaries?key=maxOrderCount&className=java.lang.Integer
+
+### 扩展字典 - String 类型
+GET {{gateway}}/scados/order/dictionaries?key=corp.name&className=java.lang.String
+
+### ==================== 4. 网关自身能力验证 (:8709) ====================
+
+### Header 谓词路由 → baidu（X-Request-bd-id 匹配 \d+ 时命中，需外网；响应头含 X-Response-From: bd）
+GET {{gateway}}/
+X-Request-bd-id: 1234
+
+### 自定义 Token 谓词路由 → taobao（x-user-type 匹配 \w+ 时命中，SetStatus=400）
+GET {{gateway}}/no-such-path?x-user-type=test
+
+### 未命中任何路由（对照：应为 404）
+GET {{gateway}}/no-such-path
+
+### 查看网关全部路由定义
+GET {{gateway}}/actuator/gateway/routes
+
+### 查看全局过滤器
+GET {{gateway}}/actuator/gateway/globalfilters
+
+### 查看路由过滤器工厂
+GET {{gateway}}/actuator/gateway/routefilters
+
+### 网关健康检查
+GET {{gateway}}/actuator/health
+
+### ==================== 附录：直连服务（⚠️ 不过网关，仅单服务排障时使用） ====================
+
+### [直连 provider] 查询用户
+GET {{provider}}/user/1
+
+### [直连 provider] 重试测试 502
+GET {{provider}}/user/retry-test?code=502
+
+### [直连 invoker] RestTemplate LB 调用（对照网关链路）
+GET {{invoker}}/invoke/user/1
+
+### [直连 invoker] Feign 慢调用（未启熔断器时为长阻塞）
+GET {{invoker}}/invoke/feign/user/1?s=6
+
+### [直连 invoker] randomorg 外部接口
+GET {{invoker}}/randomorg/integers
+
+### [直连 order] 订单详情（对照网关链路取值）
+GET {{order}}/order/detail/1
+
+### [直连 order] 健康检查（Sentinel dashboard 未启动时该项 DOWN 属预期）
+GET {{order}}/actuator/health
