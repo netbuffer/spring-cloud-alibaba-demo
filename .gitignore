@@ -27,3 +27,6 @@ nbdist/
 .nb-gradle/
 ### unified app logs ###
 .logs/
+
+### WorkBuddy ###
+.workbuddy/

@@ -57,11 +57,10 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
+          # upload-artifact 保留了目录层级，jar 实际位于 ./dist/<module>/target/*.jar
           files: |
-            ./dist/order-service.jar
-            ./dist/spring-cloud-gateway.jar
-            ./dist/user-service-invoker.jar
-            ./dist/user-service-provider.jar
+            ./dist/**/*.jar
+          fail_on_unmatched_files: true
           generate_release_notes: true
 
   docker:
