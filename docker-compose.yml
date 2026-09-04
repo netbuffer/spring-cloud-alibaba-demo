@@ -1,9 +1,8 @@
 services:
-  nacos:
+  scad-nacos:
     image: nacos/nacos-server:v3.2.3
-    pull_policy: "if_not_present"
-    hostname: nacos
-    container_name: nacos
+    hostname: scad-nacos
+    container_name: scad-nacos
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -23,22 +22,20 @@ services:
       timeout: 5s
       retries: 12
       start_period: 30s
-  sentinel-dashboard:
+  scad-sentinel-dashboard:
     image: bladex/sentinel-dashboard:1.8.9
-    pull_policy: "if_not_present"
-    hostname: sentinel-dashboard
-    container_name: sentinel-dashboard
+    hostname: scad-sentinel-dashboard
+    container_name: scad-sentinel-dashboard
     ports:
       - "8800:8858"
     restart: "no"
     environment:
       TZ: Asia/Shanghai
-  scad:
+  scad-app:
     build: .
     image: javawiki/spring-cloud-alibaba-demo:v2.0.0
-    pull_policy: "if_not_present"
-    hostname: scad
-    container_name: scad
+    hostname: scad-app
+    container_name: scad-app
     ports:
       - "8702:8702"
       - "8709:8709"
@@ -46,15 +43,15 @@ services:
       - "8700:8700"
     restart: "no"
     depends_on:
-      nacos:
+      scad-nacos:
         condition: service_healthy
     environment:
       TZ: Asia/Shanghai
-      SCAD_OS_NACOS_ADDR: nacos:8848
+      SCAD_OS_NACOS_ADDR: scad-nacos:8848
       SCAD_OS_NACOS_NS: public
-      SCAD_GW_NACOS_ADDR: nacos:8848
+      SCAD_GW_NACOS_ADDR: scad-nacos:8848
       SCAD_GW_NACOS_NS: public
-      SCAD_USI_NACOS_ADDR: nacos:8848
+      SCAD_USI_NACOS_ADDR: scad-nacos:8848
       SCAD_USI_NACOS_NS: public
-      SCAD_USP_NACOS_ADDR: nacos:8848
+      SCAD_USP_NACOS_ADDR: scad-nacos:8848
       SCAD_USP_NACOS_NS: public

@@ -2,8 +2,8 @@
 
 ![](https://img.shields.io/static/v1?label=java&message=21&color=f89820)
 ![](https://img.shields.io/static/v1?label=maven&message=3.9.6&color=C71A36)
-![](https://img.shields.io/static/v1?label=spring-boot&message=4.0.7&color=6DB33F)
-![](https://img.shields.io/static/v1?label=spring-cloud&message=2025.1.2&color=6DB33F)
+![](https://img.shields.io/static/v1?label=spring-boot&message=4.1.1&color=6DB33F)
+![](https://img.shields.io/static/v1?label=spring-cloud&message=2025.1.3&color=6DB33F)
 ![](https://img.shields.io/static/v1?label=spring-cloud-alibaba&message=2025.1.0.0&color=F68243)
 ![](https://img.shields.io/static/v1?label=nacos&message=3.2.3&color=F68243)
 ![](https://img.shields.io/static/v1?label=lombok&message=1.18.46&color=blue)
@@ -22,8 +22,8 @@
 | 组件 | 版本 | 说明 |
 |---|---|---|
 | ☕ Java | 21 | Dragonwell / OpenJDK 均可 |
-| 🍃 Spring Boot | 4.0.7 | Jakarta EE 11 基线 |
-| ☁️ Spring Cloud | 2025.1.2 | LoadBalancer / OpenFeign / Gateway Server WebFlux 5.x |
+| 🍃 Spring Boot | 4.1.1 | Jakarta EE 11 基线 |
+| ☁️ Spring Cloud | 2025.1.3 | LoadBalancer / OpenFeign / Gateway Server WebFlux 5.x |
 | 🐑 Spring Cloud Alibaba | 2025.1.0.0 | Nacos Client 3.1.1 / Sentinel 1.8.9 |
 | 🛰️ Nacos Server | 3.2.3 | 注册中心 + 配置中心（`spring.config.import` 新机制） |
 | 🛡️ Sentinel | 1.8.9 | 流控/熔断，规则持久化到 Nacos |
@@ -62,7 +62,7 @@ docker run -d --name nacos -e MODE=standalone \
   -p 8848:8848 -p 9848:9848 -p 8080:8080 nacos/nacos-server:v3.2.3
 ```
 
-或只启动 compose 中的 nacos 服务：`docker compose up -d nacos`
+或只启动 compose 中的 nacos 服务：`docker compose up -d scad-nacos`
 
 > 💡 控制台地址 `http://localhost:8080`（3.x 起独立端口），API 在 `:8848/nacos`
 >
@@ -142,7 +142,7 @@ IDEA 用户可直接使用 [help/http-requests.http](help/http-requests.http) �
 
 ```shell
 mvn clean package -DskipTests
-docker compose up -d          # 自动构建 scad 镜像并随健康检查后的 nacos 启动
+docker compose up -d          # 自动构建 scad-app 镜像并随健康检查后的 scad-nacos 启动
 ```
 
 镜像：https://hub.docker.com/r/javawiki/spring-cloud-alibaba-demo （`:v2.0.0` 起 基于 [javawiki/supervisord:v4.1.0-alijdk21](https://hub.docker.com/r/javawiki/supervisord) 🐉 Dragonwell 21）

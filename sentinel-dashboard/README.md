@@ -13,7 +13,7 @@ docker run -d --name sentinel-dashboard \
 或直接使用项目 compose：
 
 ```shell
-docker compose up -d sentinel-dashboard
+docker compose up -d scad-sentinel-dashboard
 ```
 
 ## 🔑 控制台

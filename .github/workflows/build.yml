@@ -1,0 +1,112 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [master, main]
+    tags: ['v*']
+  pull_request:
+    branches: [master, main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build with Dragonwell 21
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Dragonwell JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'dragonwell'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests --batch-mode
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: spring-cloud-alibaba-demo-jars
+          path: |
+            order-service/target/order-service.jar
+            spring-cloud-gateway/target/spring-cloud-gateway.jar
+            user-service-invoker/target/user-service-invoker.jar
+            user-service-provider/target/user-service-provider.jar
+          retention-days: 30
+
+  release:
+    name: Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: spring-cloud-alibaba-demo-jars
+          path: ./dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            ./dist/order-service.jar
+            ./dist/spring-cloud-gateway.jar
+            ./dist/user-service-invoker.jar
+            ./dist/user-service-provider.jar
+          generate_release_notes: true
+
+  docker:
+    name: Publish Docker image to ghcr.io
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: spring-cloud-alibaba-demo-jars
+
+      - name: Organize target artifacts for Docker build
+        run: |
+          mkdir -p order-service/target spring-cloud-gateway/target user-service-invoker/target user-service-provider/target
+          cp order-service.jar order-service/target/
+          cp spring-cloud-gateway.jar spring-cloud-gateway/target/
+          cp user-service-invoker.jar user-service-invoker/target/
+          cp user-service-provider.jar user-service-provider/target/
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Resolve image version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Build and push image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+            ghcr.io/${{ github.repository }}:latest
