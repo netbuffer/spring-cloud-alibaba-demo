@@ -76,7 +76,7 @@
         <dependency>
             <groupId>cn.netbuffer</groupId>
             <artifactId>print-server-address</artifactId>
-            <version>2.2.0</version>
+            <version>4.0.0</version>
         </dependency>
 
         <dependency>
@@ -96,5 +96,17 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>netbuffer-github</id>
+            <url>https://raw.githubusercontent.com/netbuffer/print-server-address/gh-pages</url>
+        </repository>
+        <repository>
+            <id>maven-central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+    </repositories>
 
 </project>

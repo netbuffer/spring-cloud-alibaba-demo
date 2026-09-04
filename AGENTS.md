@@ -19,7 +19,7 @@
 | 注册/配置中心 | Nacos Server | 3.2.3 | 控制台端口 8080，API 8848，gRPC 9848 |
 | 流控/熔断 | Sentinel | 1.8.9 | 规则支持 Nacos 数据源动态持久化 |
 | 链路埋点 | SkyWalking Toolkit | 9.6.0 | `apm-toolkit-logback-1.x` trace-id 埋点 |
-| 辅助工具 | print-server-address | 2.2.0 | 服务启动输出地址 |
+| 辅助工具 | print-server-address | 4.0.0 | 服务启动输出地址（来自 netbuffer-github 仓库） |
 | 辅助工具 | Lombok | 1.18.46 | 编译期代码生成 |
 | 容器底座 | supervisord (Dragonwell 21) | v4.1.0-alijdk21 | 多模块整合单容器一键部署 |
 
