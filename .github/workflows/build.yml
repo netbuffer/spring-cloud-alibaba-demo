@@ -64,7 +64,7 @@ jobs:
           generate_release_notes: true
 
   docker:
-    name: Publish Docker image to ghcr.io
+    name: Publish Docker image
     needs: build
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
@@ -81,13 +81,19 @@ jobs:
         with:
           name: spring-cloud-alibaba-demo-jars
 
-      - name: Organize target artifacts for Docker build
+      - name: Inspect and restore target artifacts
         run: |
+          echo "Current directory contents:"
+          pwd
+          ls -laR
+          # upload-artifact 在保留目录层级或者扁平放置时自动兼容
           mkdir -p order-service/target spring-cloud-gateway/target user-service-invoker/target user-service-provider/target
-          cp order-service.jar order-service/target/
-          cp spring-cloud-gateway.jar spring-cloud-gateway/target/
-          cp user-service-invoker.jar user-service-invoker/target/
-          cp user-service-provider.jar user-service-provider/target/
+          find . -name "order-service.jar" -exec cp {} order-service/target/ \;
+          find . -name "spring-cloud-gateway.jar" -exec cp {} spring-cloud-gateway/target/ \;
+          find . -name "user-service-invoker.jar" -exec cp {} user-service-invoker/target/ \;
+          find . -name "user-service-provider.jar" -exec cp {} user-service-provider/target/ \;
+          echo "Target jars restored:"
+          ls -la */target/*.jar
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v4
@@ -96,17 +102,32 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Log in to Docker Hub
+        if: "${{ env.DOCKERHUB_USER != '' && env.DOCKERHUB_PASS != '' }}"
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
+        uses: docker/login-action@v4
+        with:
+          username: ${{ env.DOCKERHUB_USER }}
+          password: ${{ env.DOCKERHUB_PASS }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Resolve image version
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+      - name: Resolve image version & tags
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+          TAGS="ghcr.io/${{ github.repository }}:${VERSION},ghcr.io/${{ github.repository }}:latest"
+          if [ -n "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
+            TAGS="${TAGS},javawiki/spring-cloud-alibaba-demo:${VERSION},javawiki/spring-cloud-alibaba-demo:latest"
+          fi
+          echo "TAGS=${TAGS}" >> "$GITHUB_ENV"
 
       - name: Build and push image
         uses: docker/build-push-action@v7
         with:
           context: .
           push: true
-          tags: |
-            ghcr.io/${{ github.repository }}:${{ env.VERSION }}
-            ghcr.io/${{ github.repository }}:latest
+          tags: ${{ env.TAGS }}
