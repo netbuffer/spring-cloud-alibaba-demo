@@ -33,7 +33,7 @@ services:
       TZ: Asia/Shanghai
   scad-app:
     build: .
-    image: javawiki/spring-cloud-alibaba-demo:v2.0.0
+    image: javawiki/spring-cloud-alibaba-demo:vsca.2025.1.0.0
     hostname: scad-app
     container_name: scad-app
     ports:

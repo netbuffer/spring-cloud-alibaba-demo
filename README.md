@@ -145,20 +145,20 @@ mvn clean package -DskipTests
 docker compose up -d          # 自动构建 scad-app 镜像并随健康检查后的 scad-nacos 启动
 ```
 
-镜像：https://hub.docker.com/r/javawiki/spring-cloud-alibaba-demo （`:v2.0.0` 起 基于 [javawiki/supervisord:v4.1.0-alijdk21](https://hub.docker.com/r/javawiki/supervisord) 🐉 Dragonwell 21）
+镜像：https://hub.docker.com/r/javawiki/spring-cloud-alibaba-demo （`:vsca.2025.1.0.0` 起 基于 [javawiki/supervisord:v4.1.0-alijdk21](https://hub.docker.com/r/javawiki/supervisord) 🐉 Dragonwell 21）
 
 <details>
 <summary>手动 docker run 方式</summary>
 
 ```shell
-docker build -t javawiki/spring-cloud-alibaba-demo:v2.0.0 .
+docker build -t javawiki/spring-cloud-alibaba-demo:vsca.2025.1.0.0 .
 docker run --rm -it -p 8700:8700 -p 8701:8701 -p 8702:8702 -p 8709:8709 \
   -e TZ=Asia/Shanghai \
   -e SCAD_OS_NACOS_ADDR=nacos:8848 -e SCAD_OS_NACOS_NS=public \
   -e SCAD_GW_NACOS_ADDR=nacos:8848 -e SCAD_GW_NACOS_NS=public \
   -e SCAD_USI_NACOS_ADDR=nacos:8848 -e SCAD_USI_NACOS_NS=public \
   -e SCAD_USP_NACOS_ADDR=nacos:8848 -e SCAD_USP_NACOS_NS=public \
-  --link nacos --name scad -h scad javawiki/spring-cloud-alibaba-demo:v2.0.0
+  --link nacos --name scad -h scad javawiki/spring-cloud-alibaba-demo:vsca.2025.1.0.0
 ```
 </details>
 
